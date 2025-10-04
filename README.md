@@ -83,7 +83,7 @@ Health check endpoint.
 
    To connect to a different server:
    ```bash
-   python client.py https://your-server-url.com
+   python client.py https://rpc-implementation.onrender.com
    ```
 
 ## Docker Deployment
@@ -102,7 +102,7 @@ Health check endpoint.
 
 3. **Test with client:**
    ```bash
-   python client.py http://localhost:8080
+   python client.py https://rpc-implementation.onrender.com
    ```
 
 ## Render.com Deployment
@@ -129,13 +129,13 @@ Health check endpoint.
 Once deployed, test your endpoints:
 
 ```bash
-# Replace with your actual Render URL
-python client.py https://your-app-name.onrender.com
+# Live deployment example
+python client.py https://rpc-implementation.onrender.com
 ```
 
 Or test manually with curl:
 ```bash
-curl -X POST https://your-app-name.onrender.com/add \
+curl -X POST https://rpc-implementation.onrender.com/add \
   -H "Content-Type: application/json" \
   -d '{"x": 2, "y": 3}'
 ```

@@ -42,18 +42,18 @@ Once deployed, Render will provide a URL like:
 
 Test with the client:
 ```bash
-python client.py https://your-app-name.onrender.com
+python client.py https://rpc-implementation.onrender.com
 ```
 
 Or manually with curl:
 ```bash
 # Test add
-curl -X POST https://your-app-name.onrender.com/add \
+curl -X POST https://rpc-implementation.onrender.com/add \
   -H "Content-Type: application/json" \
   -d '{"x": 2, "y": 3}'
 
 # Test multiply  
-curl -X POST https://your-app-name.onrender.com/multiply \
+curl -X POST https://rpc-implementation.onrender.com/multiply \
   -H "Content-Type: application/json" \
   -d '{"x": 4, "y": 5}'
 ```
@@ -61,9 +61,9 @@ curl -X POST https://your-app-name.onrender.com/multiply \
 ### 4. Share Your Results
 
 After deployment, you'll have:
-- **API URL**: `https://your-app-name.onrender.com`
-- **Add endpoint**: `https://your-app-name.onrender.com/add`
-- **Multiply endpoint**: `https://your-app-name.onrender.com/multiply`
+- **API URL**: `https://rpc-implementation.onrender.com`
+- **Add endpoint**: `https://rpc-implementation.onrender.com/add`
+- **Multiply endpoint**: `https://rpc-implementation.onrender.com/multiply`
 
 ## Render.com Free Tier Notes
 
