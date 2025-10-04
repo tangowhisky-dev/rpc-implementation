@@ -2,16 +2,17 @@
 
 A simple Python-based RPC (Remote Procedure Call) system with HTTP endpoints, Docker support, and timeout handling.
 
-## 🚀 Live Deployment
+## 🚀 Live Demo
 
-**Live Service URL**: https://rpc-implementation.onrender.com
+**Live Service**: https://rpc-implementation.onrender.com
 
-Try it now:
+Quick test:
 ```bash
 curl -X POST https://rpc-implementation.onrender.com/add \
   -H "Content-Type: application/json" \
   -d '{"x": 2, "y": 3}'
 ```
+*Expected response: `{"result":5}`*
 
 ## Features
 
@@ -68,11 +69,12 @@ Health check endpoint.
 }
 ```
 
-## Local Development
+## Local Development & Testing
 
 ### Prerequisites
 - Python 3.11+
 - pip
+- Docker (optional, for containerization)
 
 ### Setup
 
@@ -87,19 +89,13 @@ Health check endpoint.
    ```
    Server will start on `http://localhost:8080`
 
-3. **Run the client (in another terminal):**
+3. **Test with client (in another terminal):**
    ```bash
    python client.py
    ```
+   This will connect to `http://localhost:8080` by default.
 
-   To connect to a different server:
-   ```bash
-   python client.py https://rpc-implementation.onrender.com
-   ```
-
-## Docker Deployment
-
-### Build and Run Locally
+### Local Docker Testing
 
 1. **Build the Docker image:**
    ```bash
@@ -113,14 +109,45 @@ Health check endpoint.
 
 3. **Test with client:**
    ```bash
-   python client.py https://rpc-implementation.onrender.com
+   python client.py http://localhost:8080
    ```
 
-## Render.com Deployment
+### Manual Testing (Local)
 
-### Quick Deployment Steps
+Test the local server endpoints:
 
-#### 1. Push to GitHub
+```bash
+# Test add endpoint
+curl -X POST http://localhost:8080/add \
+  -H "Content-Type: application/json" \
+  -d '{"x": 2, "y": 3}'
+
+# Test multiply endpoint
+curl -X POST http://localhost:8080/multiply \
+  -H "Content-Type: application/json" \
+  -d '{"x": 4, "y": 5}'
+
+# Health check
+curl http://localhost:8080/health
+```
+
+**Expected Local Client Output:**
+```
+Connecting to RPC server at: http://localhost:8080
+
+=== RPC Client Test Results ===
+add(2,3) = 5
+multiply(4,5) = 20
+add(10,-5) = 5
+multiply(7,8) = 56
+add(0,100) = 100
+```
+
+## Cloud Deployment & Testing
+
+### Deploy to Render.com
+
+#### Step 1: Push to GitHub
 ```bash
 git init
 git add .
@@ -129,7 +156,7 @@ git remote add origin https://github.com/yourusername/rpc-system.git
 git push -u origin main
 ```
 
-#### 2. Deploy on Render.com
+#### Step 2: Deploy on Render.com
 
 1. **Sign up/Login** to [render.com](https://render.com)
 2. **Connect GitHub** - Link your GitHub account
@@ -148,28 +175,50 @@ git push -u origin main
 - **Port**: `8080` (auto-detected)
 - **Health Check Path**: `/health`
 
-#### 3. Test Your Deployment
+#### Step 3: Test Your Cloud Deployment
 
-Once deployed, test your endpoints:
+Once deployed, you'll get a URL like: `https://your-app-name.onrender.com`
 
+**Test with client:**
 ```bash
-# Live deployment example
-python client.py https://rpc-implementation.onrender.com
+python client.py https://your-app-name.onrender.com
 ```
 
-Or test manually with curl:
+**Test manually with curl:**
 ```bash
+# Test add endpoint
+curl -X POST https://your-app-name.onrender.com/add \
+  -H "Content-Type: application/json" \
+  -d '{"x": 2, "y": 3}'
+
+# Test multiply endpoint
+curl -X POST https://your-app-name.onrender.com/multiply \
+  -H "Content-Type: application/json" \
+  -d '{"x": 4, "y": 5}'
+
+# Health check
+curl https://your-app-name.onrender.com/health
+```
+
+### Live Example (Current Deployment)
+
+**Live Service URL**: https://rpc-implementation.onrender.com
+
+**Test the live deployment:**
+```bash
+# Test with client
+python client.py https://rpc-implementation.onrender.com
+
+# Test with curl
 curl -X POST https://rpc-implementation.onrender.com/add \
   -H "Content-Type: application/json" \
   -d '{"x": 2, "y": 3}'
 ```
 
-#### 4. Live Deployment Example
-
-After deployment, you'll have:
-- **API URL**: `https://rpc-implementation.onrender.com`
-- **Add endpoint**: `https://rpc-implementation.onrender.com/add`
-- **Multiply endpoint**: `https://rpc-implementation.onrender.com/multiply`
+**API Endpoints:**
+- Add: `https://rpc-implementation.onrender.com/add`
+- Multiply: `https://rpc-implementation.onrender.com/multiply`
+- Health: `https://rpc-implementation.onrender.com/health`
 
 ### Render.com Free Tier Notes
 
@@ -188,8 +237,21 @@ After deployment, you'll have:
 
 ## Example Client Output
 
+### Local Development Output:
 ```
 Connecting to RPC server at: http://localhost:8080
+
+=== RPC Client Test Results ===
+add(2,3) = 5
+multiply(4,5) = 20
+add(10,-5) = 5
+multiply(7,8) = 56
+add(0,100) = 100
+```
+
+### Cloud Deployment Output:
+```
+Connecting to RPC server at: https://rpc-implementation.onrender.com
 
 === RPC Client Test Results ===
 add(2,3) = 5
@@ -232,19 +294,32 @@ asg1/
 
 ## Testing
 
-Test the server endpoints manually:
+### Test Commands by Environment
 
+**Local Testing:**
 ```bash
-# Test add endpoint
+# Test with Python client (defaults to localhost)
+python client.py
+
+# Test with custom local URL
+python client.py http://localhost:8080
+
+# Manual curl tests
 curl -X POST http://localhost:8080/add \
   -H "Content-Type: application/json" \
   -d '{"x": 2, "y": 3}'
+```
 
-# Test multiply endpoint
-curl -X POST http://localhost:8080/multiply \
+**Cloud Testing:**
+```bash
+# Test deployed service
+python client.py https://rpc-implementation.onrender.com
+
+# Manual curl tests
+curl -X POST https://rpc-implementation.onrender.com/add \
   -H "Content-Type: application/json" \
-  -d '{"x": 4, "y": 5}'
+  -d '{"x": 2, "y": 3}'
 
-# Health check
-curl http://localhost:8080/health
+# Use test script for comprehensive testing
+python test_deployed.py https://rpc-implementation.onrender.com
 ```
