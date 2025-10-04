@@ -2,6 +2,17 @@
 
 A simple Python-based RPC (Remote Procedure Call) system with HTTP endpoints, Docker support, and timeout handling.
 
+## 🚀 Live Deployment
+
+**Live Service URL**: https://rpc-implementation.onrender.com
+
+Try it now:
+```bash
+curl -X POST https://rpc-implementation.onrender.com/add \
+  -H "Content-Type: application/json" \
+  -d '{"x": 2, "y": 3}'
+```
+
 ## Features
 
 - **RPC Server**: Flask-based server with `/add` and `/multiply` endpoints
@@ -107,24 +118,37 @@ Health check endpoint.
 
 ## Render.com Deployment
 
-### Step 1: Prepare for Deployment
+### Quick Deployment Steps
 
-1. Create a `render.yaml` file (optional, for infrastructure as code)
-2. Push your code to GitHub
-3. Connect your GitHub repo to Render.com
+#### 1. Push to GitHub
+```bash
+git init
+git add .
+git commit -m "Initial RPC system implementation"
+git remote add origin https://github.com/yourusername/rpc-system.git
+git push -u origin main
+```
 
-### Step 2: Deploy on Render.com
+#### 2. Deploy on Render.com
 
-1. Go to [render.com](https://render.com)
-2. Create a new **Web Service**
-3. Connect your GitHub repository
-4. Configure:
-   - **Environment**: Python 3
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `python server.py`
-   - **Port**: 8080
+1. **Sign up/Login** to [render.com](https://render.com)
+2. **Connect GitHub** - Link your GitHub account
+3. **Create Web Service**:
+   - Click "New +" → "Web Service"
+   - Select your GitHub repository
 
-### Step 3: Test Deployment
+**Configuration:**
+- **Name**: `rpc-server` (or your preferred name)
+- **Environment**: `Python 3`
+- **Region**: Choose closest to you
+- **Branch**: `main`
+- **Root Directory**: Leave empty (uses root)
+- **Build Command**: `pip install -r requirements.txt`
+- **Start Command**: `python server.py`
+- **Port**: `8080` (auto-detected)
+- **Health Check Path**: `/health`
+
+#### 3. Test Your Deployment
 
 Once deployed, test your endpoints:
 
@@ -139,6 +163,28 @@ curl -X POST https://rpc-implementation.onrender.com/add \
   -H "Content-Type: application/json" \
   -d '{"x": 2, "y": 3}'
 ```
+
+#### 4. Live Deployment Example
+
+After deployment, you'll have:
+- **API URL**: `https://rpc-implementation.onrender.com`
+- **Add endpoint**: `https://rpc-implementation.onrender.com/add`
+- **Multiply endpoint**: `https://rpc-implementation.onrender.com/multiply`
+
+### Render.com Free Tier Notes
+
+- **Sleep Mode**: Free tier services sleep after 15 minutes of inactivity
+- **Cold Start**: First request after sleep may take 10-30 seconds
+- **Monthly Hours**: 750 hours/month free (enough for most projects)
+
+### Troubleshooting
+
+**Common Issues:**
+1. **Build Fails**: Check `requirements.txt` format
+2. **Port Issues**: Ensure server uses `port=8080` and `host='0.0.0.0'`
+3. **Health Check**: Service uses `/health` endpoint for monitoring
+
+**Logs:** View logs in Render dashboard → Your Service → Logs tab
 
 ## Example Client Output
 
@@ -165,11 +211,16 @@ Request timed out
 
 ```
 asg1/
-├── server.py          # Flask RPC server
-├── client.py          # RPC client with timeout
-├── requirements.txt   # Python dependencies
-├── Dockerfile         # Docker configuration
-└── README.md         # This file
+├── server.py              # Flask RPC server
+├── client.py              # RPC client with timeout
+├── requirements.txt       # Python dependencies
+├── Dockerfile            # Docker configuration
+├── test_deployed.py      # Deployment test script
+├── test_timeout.py       # Timeout test server
+├── test_timeout_client.py # Timeout test client
+├── render.yaml           # Render.com config (optional)
+├── .gitignore           # Git ignore file
+└── README.md            # This documentation
 ```
 
 ## Error Handling
